@@ -10,6 +10,7 @@ export const AddContscts = () => {
     const [phone, setPhone] = useState('');
     const dispatch = useDispatch();
     const contacts = useSelector(getContacts);
+    
     const onInputChangeName = (e) => {
         setName(e.target.value);
       }

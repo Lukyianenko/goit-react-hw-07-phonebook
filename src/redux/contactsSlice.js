@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchContacts } from "./fetchContacts";
 import { addContact } from "./addContact";
+import { deleteContacts } from "./deleteContact";
 // import { nanoid } from 'nanoid';
 
 
@@ -37,14 +38,7 @@ export const contactsSlice = createSlice({
           [addContact.fulfilled](state, action) {
             state.contacts.isLoading = false;
             state.contacts.error = null;
-            const includesName = state.contacts.items.map(item => {return (item.name.toLowerCase())});
-              if(includesName.includes(action.payload.name.toLowerCase())) {
-                alert(`${action.payload.name} is already in contacts`)
-                return
-              }  
-              else {
-                state.contacts.items.push(action.payload);
-              }
+            state.contacts.items.push(action.payload);
           },
           [addContact.rejected](state, action) {
             state.contacts.isLoading = false;
@@ -53,7 +47,22 @@ export const contactsSlice = createSlice({
            // delete
           //  const index = state.contacts.findIndex(contact => contact.id === action.payload);
           //  state.contacts.splice(index, 1);
-          
+          [deleteContacts.pending](state) {
+            state.contacts.isLoading = true;
+          },
+          [deleteContacts.fulfilled](state, action) {
+            state.contacts.isLoading = false;
+            state.contacts.error = null;
+            console.log(action.payload.id);
+            const index = state.contacts.items.findIndex(
+              contact => contact.id === action.payload.id
+            );
+            state.contacts.items.splice(index, 1);
+          },
+          [deleteContacts.rejected](state, action) {
+            state.contacts.isLoading = false;
+            state.contacts.error = action.payload;
+          },
           }
         })
 
