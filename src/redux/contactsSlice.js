@@ -37,13 +37,23 @@ export const contactsSlice = createSlice({
           [addContact.fulfilled](state, action) {
             state.contacts.isLoading = false;
             state.contacts.error = null;
-            state.contacts.items.push(action.payload);
+            const includesName = state.contacts.items.map(item => {return (item.name.toLowerCase())});
+              if(includesName.includes(action.payload.name.toLowerCase())) {
+                alert(`${action.payload.name} is already in contacts`)
+                return
+              }  
+              else {
+                state.contacts.items.push(action.payload);
+              }
           },
           [addContact.rejected](state, action) {
             state.contacts.isLoading = false;
             state.contacts.error = action.payload;
           },
-
+           // delete
+          //  const index = state.contacts.findIndex(contact => contact.id === action.payload);
+          //  state.contacts.splice(index, 1);
+          
           }
         })
 

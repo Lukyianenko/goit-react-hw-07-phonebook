@@ -1,14 +1,15 @@
 import { useState } from "react"; 
 import PropTypes from 'prop-types';
 import { Label, Form, Input, Button } from './BookContacts.styled';
-import { useDispatch  } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import { addContact } from "../../redux/addContact";
+import { getContacts } from "../../redux/selectors";
 
 export const AddContscts = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const dispatch = useDispatch();
-
+    const contacts = useSelector(getContacts);
     const onInputChangeName = (e) => {
         setName(e.target.value);
       }
@@ -17,8 +18,14 @@ export const AddContscts = () => {
       }
     const onSubmitContact = (e) => {
         e.preventDefault();
-
-        dispatch(addContact({name, phone}));
+        const includesName = contacts.map(item => {return (item.name.toLowerCase())});
+        if(includesName.includes(name.toLowerCase())) {
+          alert(`${name} is already in contacts`)
+          return
+        }  
+        else {
+          dispatch(addContact({name, phone}));
+        }
         reset();
       }
     const reset = () => {
