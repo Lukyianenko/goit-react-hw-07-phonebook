@@ -1,29 +1,29 @@
 import { useState } from "react"; 
 import PropTypes from 'prop-types';
 import { Label, Form, Input, Button } from './BookContacts.styled';
-// import { useDispatch  } from "react-redux/es/exports";
-// import { update } from '../../redux/contactsState';
+import { useDispatch  } from "react-redux/es/exports";
+import { addContact } from "../../redux/addContact";
 
 export const AddContscts = () => {
     const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-    // const dispatch = useDispatch();
+    const [phone, setPhone] = useState('');
+    const dispatch = useDispatch();
 
     const onInputChangeName = (e) => {
         setName(e.target.value);
       }
     const onInputChangeNumber = (e) => {
-      setNumber(e.target.value);
+      setPhone(e.target.value);
       }
     const onSubmitContact = (e) => {
         e.preventDefault();
 
-        // dispatch(update(name, number));
+        dispatch(addContact({name, phone}));
         reset();
       }
     const reset = () => {
         setName('');
-        setNumber('');
+        setPhone('');
       }
 
     return (
@@ -45,7 +45,7 @@ export const AddContscts = () => {
         <Input
          type="tel"
          name="number"
-         value={number}
+         value={phone}
          onChange={onInputChangeNumber}
          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import PropTypes from 'prop-types';
 import { fetchContacts } from "../redux/fetchContacts";
+import { getIsLoading, getError } from "../redux/selectors";
 import {AddContscts} from './BookContacts/AddContact';
 import { ListContacts } from './BookContacts/ListContacts';
 // import { Filter } from './BookContacts/FilterContacts';
@@ -9,11 +10,12 @@ import { Title } from './BookContacts/BookContacts.styled';
 
 export const App = () => {
   const dispatch = useDispatch();
-  // const contacts = useSelector(state => state.contact.contacts);
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   useEffect(() => {
     dispatch(fetchContacts());
-  }, []);
+  }, [dispatch]);
 
     return (
       <div
@@ -30,6 +32,7 @@ export const App = () => {
         <Title>Phonebook</Title>
       <AddContscts />
       {/* <Filter/> */}
+      {isLoading && !error && <b>Request in progress...</b>}
       <ListContacts/>
       </div>
     );  
