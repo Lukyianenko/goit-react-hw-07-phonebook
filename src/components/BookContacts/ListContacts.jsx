@@ -8,9 +8,9 @@ export const ListContacts = () => {
     const contacts = useSelector(getContacts);
     const dispatch = useDispatch();
 
-    // const filtr = useSelector(state => state.contact.filter);
-    // const normalizeFiltr = filtr.toLowerCase();
-    // const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFiltr));
+    const filtr = useSelector(state => state.contact.filter);
+    const normalizeFiltr = filtr.toLowerCase();
+    const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizeFiltr));
 
     const onDelete = (id) => dispatch(deleteContacts(id));
 
@@ -18,7 +18,7 @@ export const ListContacts = () => {
     <ContList>
         <TitleContact>Contacts</TitleContact>
         <List>
-        {contacts.map(({ id, name, phone }) => (<ItemList key={id}>{name}: {phone} 
+        {visibleContacts.map(({ id, name, phone }) => (<ItemList key={id}>{name}: {phone} 
         <ButtonList type="button" onClick={() => onDelete(id)}>Delete</ButtonList>
         </ItemList>))}
         </List>

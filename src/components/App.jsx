@@ -5,7 +5,7 @@ import { fetchContacts } from "../redux/fetchContacts";
 import { getIsLoading, getError } from "../redux/selectors";
 import {AddContscts} from './BookContacts/AddContact';
 import { ListContacts } from './BookContacts/ListContacts';
-// import { Filter } from './BookContacts/FilterContacts';
+import { Filter } from './BookContacts/FilterContacts';
 import { Title } from './BookContacts/BookContacts.styled';
 
 export const App = () => {
@@ -31,7 +31,7 @@ export const App = () => {
       >
         <Title>Phonebook</Title>
       <AddContscts />
-      {/* <Filter/> */}
+      <Filter/>
       {isLoading && !error && <b>Request in progress...</b>}
       <ListContacts/>
       </div>

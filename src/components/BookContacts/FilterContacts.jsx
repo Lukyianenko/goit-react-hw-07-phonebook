@@ -1,9 +1,10 @@
 import { LabelFilt } from './BookContacts.styled';
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { onFilter } from '../../redux/contactsSlice';
+import { getStatusFilter } from "../../redux/selectors";
 
 export const Filter = () => {
-    const value = useSelector(state => state.contact.filter);
+    const value = useSelector(getStatusFilter);
     const dispatch = useDispatch();
 
     return(
